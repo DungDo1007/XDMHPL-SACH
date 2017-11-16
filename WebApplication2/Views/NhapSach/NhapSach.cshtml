@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "NhapSach";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+<script src="~/Scripts/myScriptsNSach.js"></script>
+<div class="container">
+    <div class="master">
+        <br/>
+        <h3>Phiếu Nhập Sách</h3>
+        <table class="table table-responsive">
+            <tr>
+                <td>Nhà Xuất Bản</td>
+                <td>
+                    <select id="nxb" class="nxb form-control">
+                        <option value="-1">---Chọn NXB---</option>
+                        @foreach (var i in ViewBag.nxblist)
+                        {
+                            <option value="@i.nxbID ">@i.nxb_ten</option>
+                        }
+                    </select>
+                    <span class="error">Chọn NXB</span>
+                </td>
+                <td>Ngày Nhập</td>
+                <td>
+                    <input type="text" id="orderDate" class="form-control" />
+                    <span class="error">Chọn ngày nhập (định dạng: dd-mm-yyyy)</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Người Giao</td>
+                <td>
+                    <input type="text" id="description" class="form-control" />
+                    <span class="error">Nhập người giao</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="details">
+        <h3>Chi Tiết</h3>
+        <table class="table table-responsive">
+            <tr>
+                <td>Sách</td>
+                <td>Số Lượng</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="mycontainer" id="mainrow">
+                <td>
+                    <select id="product" class="product form-control"></select>
+                    <span class="error">Chọn sách</span>
+                </td>
+                <td>
+                    <input type="text" id="quantity" class="quantity form-control" />
+                    <span class="error">Nhập số lượng</span>
+                </td>
+                <td>
+                    <input type="button" id="add" value="Thêm" style="width:80px" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+        <div id="orderItems">
+            <table class="table table-responsive" id="orderdetailsItems"></table>
+            <span id="orderItemError" style="color:red"></span>
+        </div>
+        <div style="padding:10px 0; text-align:right">
+            <input id="submit" type="button" value="Lưu" class="btn btn-warning" style="padding:10px 20px" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#orderDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+    })
+</script>
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>

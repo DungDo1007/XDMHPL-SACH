@@ -1,0 +1,161 @@
+﻿@using WebApplication2.Models
+@model  BookViewModel
+@{
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container" style="padding-top:3%">
+    <a href="#" class="btn btn-info" onclick="AddNewBook(0)">Thêm Sách</a><br /><br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tên Sách</th>
+                <th>Tác Giả</th>
+                <th>Giá Nhập</th>
+                <th>Giá Xuất</th>
+                <th>Số Lượng</th>
+                <th>Nhà Xuất Bản</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="SetBookList">
+            <tr id="LoadingStatus" style="color:red"></tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="MyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4 id="ModalTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(m => m.sachID, new { @id = "bookId" })
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.sach_ten, new { @id = "bookName", @class = "form-control", @placeholder = "Tên Sách" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.sach_tacgia, new { @id = "author", @class = "form-control", @placeholder = "Tác Giả" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.sach_gianhap, new { @id = "gianhap", @class = "form-control", @placeholder = "Giá Nhập" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.sach_giaxuat, new { @id = "giaxuat", @class = "form-control", @placeholder = "Giá Xuất" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(m => m.fk_nxbID, ViewBag.NXBLIST as SelectList, "--Chọn NXB--", new { @id = "DropDwn", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="btn btn-block btn-danger" id="SaveBookRecord">Lưu</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="DeleteConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Xóa Sách</h4>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn xóa đầu sách này?
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">Hủy</a>
+                    <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Xác nhận xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#LoadingStatus").html("Đang tải....");
+    $.get("/ThemSach/GetBookList", null, DataBind);
+    function DataBind(BookList) {
+       //This Code For Receive All Data From Controller And Show It In Client Side
+        var SetData = $("#SetBookList");
+        for (var i = 0; i < BookList.length; i++) {
+            var Data = "<tr class='row_" + BookList[i].sachID + "'>" +
+
+                "<td>" + BookList[i].sach_ten + "</td>" +
+                "<td>" + BookList[i].sach_tacgia + "</td>" +
+                "<td>" + BookList[i].sach_gianhap + "</td>" +
+                "<td>" + BookList[i].sach_giaxuat + "</td>" +
+                "<td>" + BookList[i].sach_soluong + "</td>" +
+                "<td>" + BookList[i].NXB_NAME + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-warning' onclick='EditBookRecord(" + BookList[i].sachID + ")' ><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-danger' onclick='DeleteBookRecord(" + BookList[i].sachID + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
+                "</tr>";
+            SetData.append(Data);
+            $("#LoadingStatus").html(" ");
+        }
+    }
+    function AddNewBook(BookId) {
+        $("#form")[0].reset();
+        $("#bookId").val(0);
+        $("#DropDwn option:selected").text("--Chọn NXB--");
+        $("#ModalTitle").html("Thêm Sách");
+        $("#MyModal").modal();
+    }
+    function EditBookRecord(BookId) {
+        var url = "/ThemSach/GetBookById?bookId=" + BookId;
+        $("#ModalTitle").html("Cập nhật sách");
+        $("#MyModal").modal();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#bookId").val(obj.sachID);
+                $("#bookName").val(obj.sach_ten);
+                $("#author").val(obj.sach_tacgia);
+                $("#gianhap").val(obj.sach_gianhap);
+                $("#giaxuat").val(obj.sach_giaxuat);
+                $("#DropDwn option:selected").text(obj.NXB.nxb_ten);
+                $("#DropDwn option:selected").val(obj.fk_nxbID);
+            }
+        })
+    }
+    $("#SaveBookRecord").click(function () {
+        var data = $("#SubmitForm").serialize();
+        $.ajax({
+            type: "Post",
+            url: "/ThemSach/SaveDataInDatabase",
+            data: data,
+            success: function (result) {
+                alert("Thành Công!..");
+                window.location.href = "/ThemSach/ThemSach";
+                $("#MyModal").modal("hide");
+            }
+        })
+    })
+    function DeleteBookRecord(BookId) {
+        $("#bookId").val(BookId);
+        $("#DeleteConfirmation").modal("show");
+    }
+    function ConfirmDelete(){
+        var bookId = $("#bookId").val();
+        $.ajax({
+            type: "POST",
+            url: "/ThemSach/DeleteBookRecord?bookId="+bookId,
+            success: function (result) {
+                $("#DeleteConfirmation").modal("hide");
+                $(".row_" + bookId).remove();
+            }
+        })
+    }
+  
+</script>

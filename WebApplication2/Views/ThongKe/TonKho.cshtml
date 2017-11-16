@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "TonKho";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+<div class="container" style="padding-top:3%">
+    <h3>Xem Tồn Kho</h3><br />
+    <table>
+        <tr>
+            <td><h4>Chọn Ngày</h4></td>
+            <td style="padding-left: 20px">
+                <input type="text" id="orderDate" class="form-control" />
+            </td>
+        </tr>
+    </table><br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sách</th>
+                <th>Tồn Kho</th>
+            </tr>
+        </thead>
+        <tbody id="SetBookList">
+            <tr id="LoadingStatus" style="color:red"></tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#orderDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+
+    })
+    $('#orderDate').on('change', function () {
+        $("#SetBookList").empty()
+        var tg = $('#orderDate').val().trim();
+        var urll = "/ThongKe/TinhTonKho?datethis=" + tg;
+        $.get(urll, null, DataBind);
+        function DataBind(m) {
+            var SetData = $("#SetBookList");
+            for (var i = 0; i < m.length; i++) {
+                var Data = "<tr class='row_" + m[i].fk_sachID + "'>" +
+                    "<td>" + m[i].SACH_NAME + "</td>" +
+                    "<td>" + m[i].tonkho_soluong + "</td>" +
+                    "</tr>";
+                SetData.append(Data);
+            }
+        }
+    })
+
+</script>
+<script>
+
+    $('#daily').on('change', function () { alert('ssss');
+            var nxbid = $('#nxb option:selected').val();
+            $.ajax({
+                type: "GET",
+                data: { nxbid: nxbid },
+                url: '/DaiLy/getsach',
+                success: function (result) {
+                    var s = '<option value="-1">--Chọn sách--</option>';
+                    for (var i = 0; i < result.length; i++) {
+                        s += '<option value="' + result[i].Id + '">' + result[i].Name + '</option>';
+                    }
+                    $("#product").html(s);
+                }
+            })
+        })
+        $('#product').on('change', function () {
+            var sachid = $('#product option:selected').val();
+            $.ajax({
+                type: "GET",
+                data: { sachid: sachid },
+                url: '/DaiLy/getgia',
+                success: function (result) {
+                    $("#gia").html(result.gia);
+                }
+            })
+
+        })
+</script>

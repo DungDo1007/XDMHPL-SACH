@@ -1,0 +1,169 @@
+﻿@using WebApplication2.Models
+@model  XuatSachDetail
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DatSach</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container" style="padding-top:3%">
+        <a href="/DaiLy/DatSach" class="btn btn-info">Danh Sách Phiếu Đặt Sách</a><br /><br />
+        <h3>Thêm Sách vào Phiếu Đặt Sách</h3>
+        <table class="table table-responsive">
+            <tr>
+                <td>Sách</td>
+                <td>Giá</td>
+                <td>Số Lượng</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="product" class="product form-control">
+                        <option value="-1">---Chọn Sách---</option>
+                        @foreach (var i in ViewBag.sachlist)
+                        {
+                            <option value="@i.sachID ">@i.sach_ten</option>
+                        }
+                    </select>                 
+                </td>
+                <td>
+                    <label id="gia" class="gia form-control"></label>
+                </td>
+                <td>
+                    <input type="text" id="quantity" class="quantity form-control" />              
+                </td>
+                <td>
+                    <input type="button" id="save" value="Thêm" style="width:80px" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sách</th>
+                    <th>Giá</th>
+                    <th>Số Lượng</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="SetBookList">
+                <tr id="LoadingStatus" style="color:red"></tr>
+            </tbody>
+        </table>
+        <div style="padding:10px 0; text-align:right">
+            <input id="DatSach" type="button" value="Đặt Sách" class="btn btn-warning" onclick="FDatSach(0)" style="padding:10px 20px" />
+        </div>
+        <div class="modal fade" id="DeleteConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h4>Xóa Sách</h4>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn xóa đầu sách này?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-primary" data-dismiss="modal">Hủy</a>
+                        <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Xác nhận xóa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#product').on('change', function () {
+            var sachid = $('#product option:selected').val();
+            $.ajax({
+                type: "GET",
+                data: { sachid: sachid },
+                url: '/DaiLy/getgia',
+                success: function (result) {
+                    $("#gia").html(result.gia);
+                }
+            })
+
+        })
+        $('#save').on('click', function () {
+            var t = @ViewBag.orderId;
+            var data = {
+                xuatsachID: t,
+                fk_sachID: $('#product option:selected').val(),
+                soluong: $('#quantity').val().trim(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/DaiLy/save',
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.status) {
+                        alert('Lưu thành công!');
+                        $('#nxb').val('-1');
+                        $('#product').val('0');  
+                        $('#quantity').val('');
+                        $("#gia").text('');    
+                        window.location.href = "/DaiLy/SuaChiTiet?orderId=" + @ViewBag.orderId;
+                    }
+                    else {
+                        alert('Lỗi');
+                    }          
+                },               
+            });
+        })
+        var urll = "/DaiLy/GetChiTietList?orderId=" + @ViewBag.orderId;
+        $.get(urll, null, DataBind);
+    function DataBind(BookList) {
+       //This Code For Receive All Data From Controller And Show It In Client Side
+        var SetData = $("#SetBookList");
+        for (var i = 0; i < BookList.length; i++) {
+            var Data = "<tr class='row_" + BookList[i].ctxuatsachID + "'>" +
+                "<td>" + BookList[i].SACH_NAME + "</td>" +
+                "<td>" + BookList[i].SACH_GIA + "</td>" +
+                "<td>" + BookList[i].soluong + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-danger' onclick='DeleteBookRecord(" + BookList[i].ctxuatsachID + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
+                "</tr>";
+            SetData.append(Data);
+        }
+    }
+    function FDatSach() {
+        $.ajax({
+            type: "POST",
+            url: "/DaiLy/DLDatsach?orderId="+@ViewBag.orderId,
+            success: function (result) {
+                if(result){
+                    alert('Đã đặt sách thành công');
+                    window.location.href = "/DaiLy/DatSach";
+                }
+                else {
+                    alert('Bạn chưa thêm sách vào phiếu đặt sách');
+                }
+            } 
+        });   
+    }
+    function DeleteBookRecord(BookId) {
+        var bookId = BookId;
+        $.ajax({
+            type: "POST",
+            url: "/DaiLy/DeleteDetail?detailId="+bookId,
+            success: function (result) {
+                alert('Xóa thành công');
+                $(".row_" + bookId).remove();
+            }
+        })
+    }
+    </script>
+</body>
+</html>

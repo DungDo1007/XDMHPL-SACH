@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <title>@ViewBag.Title</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .menu {
+            background-color: royalblue;
+            width: 100%;
+            float: left;
+            padding-left: 100px;
+        }
+
+            .menu ul {
+                list-style: none;
+            }
+
+                .menu ul li {
+                    background-color: royalblue;
+                    line-height: 36px;
+                    color: white;
+                    float: left;
+                    position: relative;
+                    width: 180px;
+                    text-align: center;
+                }
+
+                    .menu ul li a {
+                        text-decoration: none;
+                        color: white;
+                        font-size: 17px;
+                        display: block;
+                    }
+
+                        .menu ul li a:hover {
+                            background-color: palegreen;
+                            color: royalblue;
+                        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><a href="/DaiLy/DatSach">Đặt Sách</a></li>
+            <li><a href="/DaiLy/BaoSach">Báo Số Sách Bán Được</a></li>
+            <li><a href="/DaiLy/DatSach">Đặt Sách</a></li>
+            <li><a href="/DaiLy/DatSach">Đặt Sách</a></li>
+            <li><a href="/DaiLy/DatSach">Đặt Sách</a></li>
+        </ul>
+    </div>
+    <div style="padding-top: 3px">
+        @RenderBody()
+    </div>
+</body>
+</html>

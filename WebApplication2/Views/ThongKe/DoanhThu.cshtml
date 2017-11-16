@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "DoanhThu";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+<div class="container" style="padding-top:3%">
+    <h3>Xem Doanh Thu</h3><br />
+    <table>
+        <tr>
+            <td><h4>Năm</h4></td>
+            <td>
+                <select id="year" class="year form-control">
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                </select>
+            </td>
+            <td><h4 style="padding-left: 14px">Tháng</h4></td>
+            <td>
+                <select id="month" class="month form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </td>
+            <td><h4  style="padding-left: 20px">Doanh Thu</h4></td>
+            <td>
+                <span id="doanhthu" class="doanhthu" style="color:red;font-size:17px; padding-left: 5px">0</span><span style="color:red;font-size:17px; padding-left: 5px">VNĐ</span>  
+            </td>
+
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $('#year,#month').on('change', function () {
+        var year = $('#year option:selected').val();
+        var month = $('#month option:selected').val();
+        $.ajax({
+            type: "GET",
+            data: { year: year, month: month},
+            url: '/ThongKe/TinhDoanhThu',
+            success: function (result) {
+                $("#doanhthu").html(result);
+         
+            }
+        })
+    })
+    $('#month').on('change', function () {
+        var sachid = $('#product option:selected').val();
+       
+
+    })
+</script>

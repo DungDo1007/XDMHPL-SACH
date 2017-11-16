@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>@ViewBag.Title</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .menu {
+            background-color: royalblue;
+            width: 100%;
+            float: left;
+            padding-left: 100px;
+        }
+
+            .menu ul {
+                list-style: none;
+            }
+
+                .menu ul li {
+                    background-color: royalblue;
+                    line-height: 36px;
+                    color: white;
+                    float: left;
+                    position: relative;
+                    width: 180px;
+                    text-align: center;
+                }
+
+                    .menu ul li a {
+                        text-decoration: none;
+                        color: white;
+                        font-size: 17px;
+                        display: block;
+                    }
+
+                        .menu ul li a:hover {
+                            background-color: palegreen;
+                            color: royalblue;
+                        }
+                        .menu ul li ul{max-width: 80%; position:absolute;display:none}
+    .menu ul li:hover ul{display:block}
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><a href="/ThemSach/ThemSach">Thêm Sách</a></li>
+            <li><a href="/NhapSach/NhapSach">Nhập Sách</a></li>
+            <li><a href="/XuatSach/XuatSach">Xuất Sách</a></li>
+            <li><a href="/TraNoNXB/TraNo">Trả Nợ NXB</a></li>
+            <li>
+            <a href="#">Thống Kê</a>
+                <ul>
+                    <li><a href="/ThongKe/TonKho">Tồn Kho</a></li>
+                    <li><a href="/ThongKe/CongNo">Công Nợ ĐLý</a></li>
+                    <li><a href="/ThongKe/NoNXB">Số Tiền Nợ NXB</a></li>
+                    <li><a href="/ThongKe/DoanhThu">Doanh Thu</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div style="padding-top: 3px">
+        @RenderBody()
+    </div>
+</body>
+</html>

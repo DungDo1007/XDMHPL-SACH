@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="THUModelStoreContainer" CdmEntityContainer="THUEntities">
+    <EntitySetMapping Name="DaiLies">
+      <EntityTypeMapping TypeName="THUModel.DaiLy">
+        <MappingFragment StoreEntitySet="DaiLy">
+          <ScalarProperty Name="daily_debtmax" ColumnName="daily_debtmax" />
+          <ScalarProperty Name="daily_pass" ColumnName="daily_pass" />
+          <ScalarProperty Name="daily_user" ColumnName="daily_user" />
+          <ScalarProperty Name="daily_sdt" ColumnName="daily_sdt" />
+          <ScalarProperty Name="daily_diachi" ColumnName="daily_diachi" />
+          <ScalarProperty Name="daily_ten" ColumnName="daily_ten" />
+          <ScalarProperty Name="dailyID" ColumnName="dailyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DaiLyDebts">
+      <EntityTypeMapping TypeName="THUModel.DaiLyDebt">
+        <MappingFragment StoreEntitySet="DaiLyDebt">
+          <ScalarProperty Name="dailydebt_soluong" ColumnName="dailydebt_soluong" />
+          <ScalarProperty Name="fk_sachID" ColumnName="fk_sachID" />
+          <ScalarProperty Name="fk_dailyID" ColumnName="fk_dailyID" />
+          <ScalarProperty Name="dailydebtID" ColumnName="dailydebtID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DaiLyDebtTiens">
+      <EntityTypeMapping TypeName="THUModel.DaiLyDebtTien">
+        <MappingFragment StoreEntitySet="DaiLyDebtTien">
+          <ScalarProperty Name="dailydebttien_sach" ColumnName="dailydebttien_sach" />
+          <ScalarProperty Name="dailydebttien_ngaycapnhat" ColumnName="dailydebttien_ngaycapnhat" />
+          <ScalarProperty Name="dailydebttien_tien" ColumnName="dailydebttien_tien" />
+          <ScalarProperty Name="fk_dailyID" ColumnName="fk_dailyID" />
+          <ScalarProperty Name="dailydebttienID" ColumnName="dailydebttienID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DoanhThus">
+      <EntityTypeMapping TypeName="THUModel.DoanhThu">
+        <MappingFragment StoreEntitySet="DoanhThu">
+          <ScalarProperty Name="doanhthu_ngaycapnhat" ColumnName="doanhthu_ngaycapnhat" />
+          <ScalarProperty Name="doanhthu_tien" ColumnName="doanhthu_tien" />
+          <ScalarProperty Name="doanhthuID" ColumnName="doanhthuID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhapSachDetails">
+      <EntityTypeMapping TypeName="THUModel.NhapSachDetail">
+        <MappingFragment StoreEntitySet="NhapSachDetails">
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+          <ScalarProperty Name="fk_sachID" ColumnName="fk_sachID" />
+          <ScalarProperty Name="nhapsachID" ColumnName="nhapsachID" />
+          <ScalarProperty Name="ctnhapsachID" ColumnName="ctnhapsachID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhapSachMasters">
+      <EntityTypeMapping TypeName="THUModel.NhapSachMaster">
+        <MappingFragment StoreEntitySet="NhapSachMaster">
+          <ScalarProperty Name="nhapsach_nguoigiao" ColumnName="nhapsach_nguoigiao" />
+          <ScalarProperty Name="nhapsach_ngaygiao" ColumnName="nhapsach_ngaygiao" />
+          <ScalarProperty Name="fk_nxbID" ColumnName="fk_nxbID" />
+          <ScalarProperty Name="nhapsachID" ColumnName="nhapsachID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NXBs">
+      <EntityTypeMapping TypeName="THUModel.NXB">
+        <MappingFragment StoreEntitySet="NXB">
+          <ScalarProperty Name="nxb_sdt" ColumnName="nxb_sdt" />
+          <ScalarProperty Name="nxb_diachi" ColumnName="nxb_diachi" />
+          <ScalarProperty Name="nxb_ten" ColumnName="nxb_ten" />
+          <ScalarProperty Name="nxbID" ColumnName="nxbID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NXBDebts">
+      <EntityTypeMapping TypeName="THUModel.NXBDebt">
+        <MappingFragment StoreEntitySet="NXBDebt">
+          <ScalarProperty Name="nxbdebt_banduoc" ColumnName="nxbdebt_banduoc" />
+          <ScalarProperty Name="nxbdebt_soluong" ColumnName="nxbdebt_soluong" />
+          <ScalarProperty Name="fk_sachID" ColumnName="fk_sachID" />
+          <ScalarProperty Name="fk_nxbID" ColumnName="fk_nxbID" />
+          <ScalarProperty Name="nxbdebtID" ColumnName="nxbdebtID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NXBDebtTiens">
+      <EntityTypeMapping TypeName="THUModel.NXBDebtTien">
+        <MappingFragment StoreEntitySet="NXBDebtTien">
+          <ScalarProperty Name="fk_nxbID" ColumnName="fk_nxbID" />
+          <ScalarProperty Name="nxbdebttien_ngaycapnhat" ColumnName="nxbdebttien_ngaycapnhat" />
+          <ScalarProperty Name="nxbdebttien_tien" ColumnName="nxbdebttien_tien" />
+          <ScalarProperty Name="nxbdebttienID" ColumnName="nxbdebttienID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Saches">
+      <EntityTypeMapping TypeName="THUModel.Sach">
+        <MappingFragment StoreEntitySet="Sach">
+          <ScalarProperty Name="sach_soluong" ColumnName="sach_soluong" />
+          <ScalarProperty Name="sach_giaxuat" ColumnName="sach_giaxuat" />
+          <ScalarProperty Name="sach_gianhap" ColumnName="sach_gianhap" />
+          <ScalarProperty Name="fk_nxbID" ColumnName="fk_nxbID" />
+          <ScalarProperty Name="sach_tacgia" ColumnName="sach_tacgia" />
+          <ScalarProperty Name="sach_ten" ColumnName="sach_ten" />
+          <ScalarProperty Name="sachID" ColumnName="sachID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="THUModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TonKhoes">
+      <EntityTypeMapping TypeName="THUModel.TonKho">
+        <MappingFragment StoreEntitySet="TonKho">
+          <ScalarProperty Name="tonkho_ngaycapnhat" ColumnName="tonkho_ngaycapnhat" />
+          <ScalarProperty Name="tonkho_soluong" ColumnName="tonkho_soluong" />
+          <ScalarProperty Name="fk_sachID" ColumnName="fk_sachID" />
+          <ScalarProperty Name="tonkhoID" ColumnName="tonkhoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="XuatSachDetails">
+      <EntityTypeMapping TypeName="THUModel.XuatSachDetail">
+        <MappingFragment StoreEntitySet="XuatSachDetails">
+          <ScalarProperty Name="soluong" ColumnName="soluong" />
+          <ScalarProperty Name="fk_sachID" ColumnName="fk_sachID" />
+          <ScalarProperty Name="xuatsachID" ColumnName="xuatsachID" />
+          <ScalarProperty Name="ctxuatsachID" ColumnName="ctxuatsachID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="XuatSachMasters">
+      <EntityTypeMapping TypeName="THUModel.XuatSachMaster">
+        <MappingFragment StoreEntitySet="XuatSachMaster">
+          <ScalarProperty Name="xuatsach_tongtien" ColumnName="xuatsach_tongtien" />
+          <ScalarProperty Name="xuatsach_trangthai" ColumnName="xuatsach_trangthai" />
+          <ScalarProperty Name="xuatsach_nguoinhan" ColumnName="xuatsach_nguoinhan" />
+          <ScalarProperty Name="xuatsach_ngayupdate" ColumnName="xuatsach_ngayupdate" />
+          <ScalarProperty Name="xuatsach_ngayorder" ColumnName="xuatsach_ngayorder" />
+          <ScalarProperty Name="fk_dailyID" ColumnName="fk_dailyID" />
+          <ScalarProperty Name="xuatsachID" ColumnName="xuatsachID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

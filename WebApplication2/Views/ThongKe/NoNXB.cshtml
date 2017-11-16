@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "NoNXB";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+<div class="container" style="padding-top:3%">
+    <h3>Xem Số Nợ Phải Trả NXB</h3><br />
+    <table>
+        <tr>
+            <td><h4>Chọn Ngày</h4></td>
+            <td style="padding-left: 20px">
+                <input type="text" id="orderDate" class="form-control" />
+            </td>
+
+        </tr>
+    </table><br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nhà Xuất Bản</th>
+                <th>Số Tiền Nợ</th>
+            </tr>
+        </thead>
+        <tbody id="SetBookList">
+            <tr id="LoadingStatus" style="color:red"></tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#orderDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+
+    })
+    $('#orderDate').on('change', function () {
+        $("#SetBookList").empty()
+        var tg = $('#orderDate').val().trim();
+        var urll = "/ThongKe/TinhNoNXB?datethis=" + tg;
+        $.get(urll, null, DataBind);
+        function DataBind(m) {
+            var SetData = $("#SetBookList");
+            for (var i = 0; i < m.length; i++) {
+                var Data = "<tr class='row_" + m[i].fk_nxbID + "'>" +
+                    "<td>" + m[i].NXB_NAME + "</td>" +
+                    "<td>" + m[i].notiennxb + "</td>" +
+                    "</tr>";
+                SetData.append(Data);
+            }
+        }
+    })
+
+</script>

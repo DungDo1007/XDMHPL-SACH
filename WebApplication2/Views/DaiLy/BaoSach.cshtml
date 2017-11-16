@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BaoSach</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/myScriptsBaoSach.js"></script>
+</head>
+<body>
+    <div class="container" style="padding-top:3%">
+        <a href="/DaiLy/DatSach" class="btn btn-info">Danh Sách Phiếu Đặt Sách</a><br /><br />
+        <h4><span style="float: left">Tổng Tiền Phải Trả:</span></h4><span id="tongtien" class="tongtien" style="color:red;font-size:17px; padding-left: 5px">0</span><span style="color:red;font-size:17px; padding-left: 5px">VNĐ</span>    
+        <h3 style="clear:both">Báo Sách Bán Được</h3>
+        <table class="table table-responsive">
+            <tr>
+                <td>Sách</td>
+                <td>Giá</td>
+                <td>Số Lượng Nợ</td>
+                <td>Số Lượng Báo</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="sachdebt" class="sachdebt form-control">
+                    </select>
+                </td>
+                <td>
+                    <div id="gia" class="gia form-control" />
+                </td>
+                <td>
+                    <div id="sldebt" class="sldebt form-control" />
+                </td>
+                <td>
+                    <input type="text" id="quantity" class="quantity form-control" />
+                </td>
+                <td>
+                    <input type="button" id="save" value="Lưu" style="width:80px" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+        <span id="orderItemError" style="color:red"></span>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sách</th>
+                    <th>Giá</th>
+                    <th>Số Lượng Nợ</th>
+                </tr>
+            </thead>
+            <tbody id="SetBookList">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

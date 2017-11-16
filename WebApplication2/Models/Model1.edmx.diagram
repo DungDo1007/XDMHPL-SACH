@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4678e61d435345749b5555a87163aadd" Name="Diagram1">
+        <EntityTypeShape EntityType="THUModel.DaiLy" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="THUModel.DaiLyDebt" Width="1.5" PointX="8.25" PointY="9" />
+        <EntityTypeShape EntityType="THUModel.DaiLyDebtTien" Width="1.5" PointX="8.25" PointY="1.875" />
+        <EntityTypeShape EntityType="THUModel.DoanhThu" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="THUModel.NhapSachDetail" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="THUModel.NhapSachMaster" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="THUModel.NXB" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="THUModel.NXBDebt" Width="1.5" PointX="8.25" PointY="5.875" />
+        <EntityTypeShape EntityType="THUModel.NXBDebtTien" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="THUModel.Sach" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="THUModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="THUModel.TonKho" Width="1.5" PointX="5.25" PointY="14.875" />
+        <EntityTypeShape EntityType="THUModel.XuatSachDetail" Width="1.5" PointX="5.25" PointY="11" />
+        <EntityTypeShape EntityType="THUModel.XuatSachMaster" Width="1.5" PointX="3" PointY="18.625" />
+        <AssociationConnector Association="THUModel.FK_DaiLyDebt_DaiLy" />
+        <AssociationConnector Association="THUModel.FK_DaiLyDebtTien_DaiLy" />
+        <AssociationConnector Association="THUModel.FK_DaiLyDebtTien_DaiLy1" />
+        <AssociationConnector Association="THUModel.FK_XuatSachMaster_DaiLy" />
+        <AssociationConnector Association="THUModel.FK_DaiLyDebt_Sach" />
+        <AssociationConnector Association="THUModel.FK_NhapSachDetails_Sach" />
+        <AssociationConnector Association="THUModel.FK_OrderDetails_OrderMaster" />
+        <AssociationConnector Association="THUModel.FK_NhapSachMaster_NXB" />
+        <AssociationConnector Association="THUModel.FK_NXBDebt_NXB" />
+        <AssociationConnector Association="THUModel.FK_NXBDebtTien_NXB" />
+        <AssociationConnector Association="THUModel.FK_Sach_NXB" />
+        <AssociationConnector Association="THUModel.FK_NXBDebt_Sach" />
+        <AssociationConnector Association="THUModel.FK_tonkho_Sach" />
+        <AssociationConnector Association="THUModel.FK_XuatSachDetails_Sach" />
+        <AssociationConnector Association="THUModel.FK_XuatSachDetails_XuatSachMaster" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

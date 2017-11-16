@@ -1,0 +1,204 @@
+﻿@using WebApplication2.Models
+@{
+    ViewBag.Title = "LapPhieuXuat";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+<script src="~/Scripts/myScriptsLapPhieuXuat.js"></script>
+<div class="container">
+    <div class="master">
+        <br/><h3>Phiếu Xuất</h3>
+        <table class="table table-responsive">
+            <tr>
+                <td>Đại Lý</td>
+                <td>
+                    <div>@Session["dailyten"].ToString()</div>
+                </td>
+                <td>Tổng Tiền</td>
+                <td>
+                    <div class="TongTien">@ViewBag.TONGTIEN</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Nợ Tồn</td>
+                <td>
+                    <div class="DebtTon">@ViewBag.DebtTon</div>
+                </td>
+                <td>Nợ Tối Đa</td>
+                <td>
+                    <div class="DebtMax">@ViewBag.DebtMax</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Người Nhận</td>
+                <td>
+                    <input type="text" id="nguoinhan" class="form-control" />
+                    <span class="error">Nhập người nhận</span>
+                </td>
+                <td>Ngày Xuất</td>
+                <td>
+                    <input type="text" id="orderDate" class="form-control" />
+                    <span class="error">Chọn ngày xuất (định dạng: dd-mm-yyyy)</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="details">
+        <h3>Chi Tiết</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>             
+                    <th>Sách</th>
+                    <th>Giá</th>
+                    <th>Số Lượng Đặt</th>
+                    <th>Số Lượng Tồn</th>
+                    <th>SL Tồn Tạm</th>
+                </tr>
+            </thead>
+            <tbody id="SetBookList">
+            </tbody>
+        </table>
+        <span id="orderItemError1" style="color:red"></span><br/>
+        <span id="orderItemError2" style="color:red"></span>
+        <div style="padding:10px 0; text-align:right">
+            <input id="submitXuat" type="button" value="Xuất Phiếu" class="btn btn-warning" style="padding:10px 20px" />
+            <input id="submitHuy" type="button" value="Hủy Phiếu" class="btn btn-warning" style="padding:10px 20px" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#orderDate').datepicker({
+            dateFormat: 'dd-mm-yy'
+        })
+    })
+
+    var urll = "/XuatSach/GetChiTietList?orderId=" +  @ViewBag.orderID;
+    $.get(urll, null, DataBind);
+    function DataBind(m) {
+        //This Code For Receive All Data From Controller And Show It In Client Side
+        var SetData = $("#SetBookList");
+        for (var i = 0; i < m.length; i++) {
+            var Data = "<tr class='row_" + m[i].ctxuatsachID + "'>" +
+                "<td>" + m[i].SACH_NAME + "</td>" +
+                "<td>" + m[i].SACH_GIA + "</td>" +
+                "<td class='sld'>" + m[i].soluong + "</td>" +
+                "<td class='slt'>" + m[i].soluongton + "</td>" +
+                "<td class='tontam'></td>"+
+                "</tr>";
+            SetData.append(Data);
+        }
+    }
+    function TinhTonTam() {
+        $('#SetBookList > tr').each(function () {
+            var data2 =  parseInt($('.slt',this).text()) - parseInt($('.sld',this).text());
+            $('.tontam',this).append(data2);
+        })
+    }
+    $( window ).on( "load", TinhTonTam );
+    $('#submitXuat').click(function () {
+        var isAllValid = true;
+        $('#SetBookList > tr').each(function () {
+            if(parseInt($('.tontam',this).text()) < 0)
+            {
+                $('#orderItemError1').text('Không đủ số lượng xuất');
+                isAllValid = false;
+            }
+        })
+        if((parseFloat($('.TongTien').text()) + parseFloat($('.DebtTon').text())) > parseFloat($('.DebtMax').text()))
+        {
+            $('#orderItemError2').text('Nợ hiện tại vượt quá số nợ tối đa');
+            isAllValid = false;
+        }
+        if ($('#orderDate').val().trim() == '') {
+            $('#orderDate').siblings('span.error').css('visibility', 'visible');
+            isAllValid = false;
+        }
+        else {
+            $('#orderDate').siblings('span.error').css('visibility', 'hidden');
+        }
+        if ($('#nguoinhan').val().trim() == '') {
+            $('#nguoinhan').siblings('span.error').css('visibility', 'visible');
+            isAllValid = false;
+        }
+        else {
+            $('#nguoinhan').siblings('span.error').css('visibility', 'hidden');
+        }
+        if (isAllValid) {
+            var data = {
+                xuatsachID: @ViewBag.orderId,
+                xuatsach_tongtien: @ViewBag.TONGTIEN,
+                xuatsach_ngayupdate: $('#orderDate').val().trim(),
+                xuatsach_nguoinhan: $('#nguoinhan').val().trim(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/XuatSach/save',
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.status) {
+                        alert('Lưu thành công!');
+                        window.location.href = "/XuatSach/XuatSach";
+                    }
+                    else {
+                        alert('Lỗi');
+                    }
+                },
+            });
+        }
+    })
+    $('#submitHuy').click(function () {
+        var isAllValid = true;
+        if ($('#orderDate').val().trim() == '') {
+            $('#orderDate').siblings('span.error').css('visibility', 'visible');
+            isAllValid = false;
+        }
+        else {
+            $('#orderDate').siblings('span.error').css('visibility', 'hidden');
+        }
+        if(isAllValid)
+        {
+            var data = {
+                xuatsachID: @ViewBag.orderId,
+                xuatsach_ngayupdate: $('#orderDate').val().trim(),
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/XuatSach/huyphieu',
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.status) {
+                        alert('Hủy thành công!');
+                        window.location.href = "/XuatSach/XuatSach";
+                    }
+                    else {
+                        alert('Lỗi');
+                    }
+                },
+            });
+        }
+    })
+</script>
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    span.errorSL {
+        display: block;
+        visibility: hidden;
+        color: red;
+    }
+    th.TB{ display: block;
+        visibility: hidden;
+        color: red;}
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>

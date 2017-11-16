@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DangNhap</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="jumbotron" style="margin-top: 120px; text-align: center">
+                    @using (Html.BeginForm("DangNhap","DaiLy", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <input type="text" name="txtTaiKhoan" class="form-control" placeholder="Nhập Tên Tài Khoản" />
+                        </div>
+                            <div class="form-group">
+                                <input type="password" name="txtMatKhau" class="form-control" placeholder="Nhập Mật Khẩu" />
+                            </div>
+                            <button type="submit" class="btn-primary form-control">Đăng Nhập</button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</body>
+</html>

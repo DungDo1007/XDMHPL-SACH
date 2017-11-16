@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "TraNo";
+    Layout = "~/Views/Shared/LayoutPhathanhsach.cshtml";
+}
+@*<script src="~/Scripts/myScriptsTraNo.js"></script>*@
+    <div class="container" style="padding-top:3%">
+        <h3>Trả Nợ Nhà Xuất Bản</h3><br />
+        <table>
+            <tr>
+                <td><h4>Chọn Nhà Xuất Bản</h4></td>
+                <td style="padding-left: 20px">
+                    <select id="nxb" class="nxb form-control">
+                        <option value="-1">---Chọn NXB---</option>
+                        @foreach (var i in ViewBag.nxblist)
+                        {
+                            <option value="@i.nxbID ">@i.nxb_ten</option>
+                        }
+                    </select>    
+                </td>
+
+            </tr>
+        </table><br />
+        <h4><span style="float: left">Tổng Tiền Phải Trả:</span></h4><span id="tongtien" class="tongtien" style="color:red;font-size:17px; padding-left: 5px">0</span><span style="color:red;font-size:17px; padding-left: 5px">VNĐ</span>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sách</th>
+                    <th>Giá</th>
+                    <th>Số Lượng Nợ</th>
+                    <th>Số Lượng Bán Được</th>
+                </tr>
+            </thead>
+            <tbody id="SetBookList"></tbody>
+        </table>
+        <div style="padding:10px 0; text-align:right">
+            <input id="submit" type="button" value="Trả Nợ" class="btn btn-warning" style="padding:10px 20px" />
+        </div>
+    </div>
+<script>
+    $('#nxb').on('change', function () {
+        $("#SetBookList").empty();
+        var nxbid = $('#nxb option:selected').val();
+        var ull = "/TraNoNXB/GetNoList?nxbID=" + nxbid;
+        $.get(ull, null, DataBind);
+        function DataBind(m) {
+            var SetData = $("#SetBookList");
+            for (var i = 0; i < m.m.length; i++) {
+                var Data = "<tr class='row_" + m.m[i].nxbdebtID + "'>" +
+                    "<td>" + m.m[i].SACH_NAME + "</td>" +
+                    "<td class='gia'>" + m.m[i].SACH_GIA + "</td>" +
+                    "<td>" + m.m[i].nxbdebt_soluong + "</td>" +
+                    "<td class='slbanduoc'>" + m.m[i].nxbdebt_banduoc + "</td>" +
+                    "</tr>";     
+                SetData.append(Data);
+            }
+            $('#tongtien').html(m.t);
+        }   
+    })
+   
+    $('#submit').on('click', function () {
+        $.ajax({
+            type: "Post",
+            data: { nxbID: $('#nxb option:selected').val(), tongtien: parseFloat($('#tongtien').text()) },
+            url: "/TraNoNXB/save",
+            success: function () {
+                $("#SetBookList").empty();
+                $('#tongtien').html('0'); $('#nxb').val('-1');
+            }
+        })
+    })
+</script>

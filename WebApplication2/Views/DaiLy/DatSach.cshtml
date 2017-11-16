@@ -1,0 +1,95 @@
+﻿@using WebApplication2.Models
+@model  XuatSachMaster
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DatSach</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container" style="padding-top:3%">
+        <a href="#" class="btn btn-info" onclick="AddNewBook(0)">Thêm Phiếu Đặt Sách</a>
+        <a href="/DaiLy/BaoSach" class="btn btn-info">Báo Số Sách Bán Được</a><br /><br />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ngày Đặt Sách</th>
+                    <th>Ngày Được Xác Nhận</th>
+                    <th>Người Nhận Sách</th>
+                    <th>Tổng Tiền</th>
+                    <th>Trạng Thái</th>
+                    <th>Chi Tiết</th>        
+                </tr>
+            </thead>
+            <tbody id="SetBookList">
+                <tr id="LoadingStatus" style="color:red"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $.get("/DaiLy/GetBookList", null, DataBind);
+    function formatDate(date)
+    {
+        var D = new Date(parseInt(date.substr(6)));
+        var month = D.getMonth() + 1;
+        if (month < 10) { month = "0" + month }
+        var day = D.getDate();
+        if(day < 10) {day = "0" + day}
+        return day + "/" + month + "/" + D.getFullYear();
+    }
+    function DataBind(m) {
+       //This Code For Receive All Data From Controller And Show It In Client Side
+        var SetData = $("#SetBookList");
+        for (var i = 0; i < m.length; i++) {
+            var Data = "<tr class='row_" + m[i].xuatsachID + "'>" +
+                "<td>" + formatDate(m[i].ngayorder) + "</td>" +
+                "<td>" + formatDate(m[i].ngayupdate) + "</td>" +
+                "<td>" + m[i].nguoinhan + "</td>" +
+                "<td>" + m[i].tongtien + "</td>" +
+                "<td>" + m[i].trangthai + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-warning' onclick='Chitiet(" + m[i].xuatsachID + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
+                "</tr>";
+            SetData.append(Data);
+        }
+    }
+    function AddNewBook() {
+        $.ajax({
+            type: "Post",
+            url: "/DaiLy/TaoMoi",
+            success: function () {
+                window.location.href = "/DaiLy/DatSach";
+            }
+        })
+    }
+    function Chitiet(BookId) {
+        var bookId = BookId;
+        $.ajax({
+            type: "POST",
+            url: "/DaiLy/DatSach?orderID=" + bookId,
+            success: function (result) {
+                if (result) {
+                    window.location.href = "/DaiLy/SuaChiTiet?orderID=" + bookId;
+                }
+                else {
+                    window.location.href = "/DaiLy/XemChiTiet?orderID=" + bookId;
+                }
+            }
+        })
+    }
+    </script>
+</body>
+</html>

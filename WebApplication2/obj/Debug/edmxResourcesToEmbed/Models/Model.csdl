@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_phathanhsachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DB_phathanhsachEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="book_detail" EntityType="DB_phathanhsachModel.book_detail" />
+    <EntitySet Name="ctnhapsach" EntityType="DB_phathanhsachModel.ctnhapsach" />
+    <EntitySet Name="dausach" EntityType="DB_phathanhsachModel.dausach" />
+    <EntitySet Name="nhapsach" EntityType="DB_phathanhsachModel.nhapsach" />
+    <EntitySet Name="publishing" EntityType="DB_phathanhsachModel.publishing" />
+    <EntitySet Name="publishing_debt" EntityType="DB_phathanhsachModel.publishing_debt" />
+    <EntitySet Name="sysdiagrams" EntityType="DB_phathanhsachModel.sysdiagrams" />
+    <EntitySet Name="tonkho" EntityType="DB_phathanhsachModel.tonkho" />
+    <AssociationSet Name="FK_book_detail_dausach" Association="DB_phathanhsachModel.FK_book_detail_dausach">
+      <End Role="dausach" EntitySet="dausach" />
+      <End Role="book_detail" EntitySet="book_detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_book_detail_publishing" Association="DB_phathanhsachModel.FK_book_detail_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="book_detail" EntitySet="book_detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ctnhapsach_book_detail" Association="DB_phathanhsachModel.FK_ctnhapsach_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="ctnhapsach" EntitySet="ctnhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_publishing_debt_book_detail" Association="DB_phathanhsachModel.FK_publishing_debt_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="publishing_debt" EntitySet="publishing_debt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tonkho_book_detail" Association="DB_phathanhsachModel.FK_tonkho_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="tonkho" EntitySet="tonkho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ctnhapsach_nhapsach1" Association="DB_phathanhsachModel.FK_ctnhapsach_nhapsach1">
+      <End Role="nhapsach" EntitySet="nhapsach" />
+      <End Role="ctnhapsach" EntitySet="ctnhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_nhapsach_publishing" Association="DB_phathanhsachModel.FK_nhapsach_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="nhapsach" EntitySet="nhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_publishing_debt_publishing" Association="DB_phathanhsachModel.FK_publishing_debt_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="publishing_debt" EntitySet="publishing_debt" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="book_detail">
+    <Key>
+      <PropertyRef Name="book_detail_id" />
+    </Key>
+    <Property Name="book_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="book_detail_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="fk_publishing" Type="Int32" />
+    <Property Name="book_detail_author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="book_detail_pages" Type="Int32" />
+    <Property Name="fk_dausach" Type="Int32" />
+    <NavigationProperty Name="dausach" Relationship="DB_phathanhsachModel.FK_book_detail_dausach" FromRole="book_detail" ToRole="dausach" />
+    <NavigationProperty Name="publishing" Relationship="DB_phathanhsachModel.FK_book_detail_publishing" FromRole="book_detail" ToRole="publishing" />
+    <NavigationProperty Name="ctnhapsach" Relationship="DB_phathanhsachModel.FK_ctnhapsach_book_detail" FromRole="book_detail" ToRole="ctnhapsach" />
+    <NavigationProperty Name="publishing_debt" Relationship="DB_phathanhsachModel.FK_publishing_debt_book_detail" FromRole="book_detail" ToRole="publishing_debt" />
+    <NavigationProperty Name="tonkho" Relationship="DB_phathanhsachModel.FK_tonkho_book_detail" FromRole="book_detail" ToRole="tonkho" />
+  </EntityType>
+  <EntityType Name="ctnhapsach">
+    <Key>
+      <PropertyRef Name="ctnhapsach_id" />
+    </Key>
+    <Property Name="ctnhapsach_id" Type="Int32" Nullable="false" />
+    <Property Name="fk_nhapsach" Type="Int32" />
+    <Property Name="fk_book_detail" Type="Int32" />
+    <Property Name="nhapsach_soluong" Type="Int32" />
+    <Property Name="nhapsach_gianhap" Type="Double" />
+    <NavigationProperty Name="book_detail" Relationship="DB_phathanhsachModel.FK_ctnhapsach_book_detail" FromRole="ctnhapsach" ToRole="book_detail" />
+    <NavigationProperty Name="nhapsach" Relationship="DB_phathanhsachModel.FK_ctnhapsach_nhapsach1" FromRole="ctnhapsach" ToRole="nhapsach" />
+  </EntityType>
+  <EntityType Name="dausach">
+    <Key>
+      <PropertyRef Name="dausach_id" />
+    </Key>
+    <Property Name="dausach_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dausach_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="book_detail" Relationship="DB_phathanhsachModel.FK_book_detail_dausach" FromRole="dausach" ToRole="book_detail" />
+  </EntityType>
+  <EntityType Name="nhapsach">
+    <Key>
+      <PropertyRef Name="nhapsach_id" />
+    </Key>
+    <Property Name="nhapsach_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fk_publishing" Type="Int32" />
+    <Property Name="nhapsach_nguoigiao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="nhapsach_ngaygiao" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ctnhapsach" Relationship="DB_phathanhsachModel.FK_ctnhapsach_nhapsach1" FromRole="nhapsach" ToRole="ctnhapsach" />
+    <NavigationProperty Name="publishing" Relationship="DB_phathanhsachModel.FK_nhapsach_publishing" FromRole="nhapsach" ToRole="publishing" />
+  </EntityType>
+  <EntityType Name="publishing">
+    <Key>
+      <PropertyRef Name="publishing_id" />
+    </Key>
+    <Property Name="publishing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="publishing_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="publishing_address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="publishing_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="book_detail" Relationship="DB_phathanhsachModel.FK_book_detail_publishing" FromRole="publishing" ToRole="book_detail" />
+    <NavigationProperty Name="nhapsach" Relationship="DB_phathanhsachModel.FK_nhapsach_publishing" FromRole="publishing" ToRole="nhapsach" />
+    <NavigationProperty Name="publishing_debt" Relationship="DB_phathanhsachModel.FK_publishing_debt_publishing" FromRole="publishing" ToRole="publishing_debt" />
+  </EntityType>
+  <EntityType Name="publishing_debt">
+    <Key>
+      <PropertyRef Name="publishing_debt_id" />
+    </Key>
+    <Property Name="publishing_debt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fk_pubshing" Type="Int32" />
+    <Property Name="fk_book_detail" Type="Int32" />
+    <Property Name="publishing_debt_soluong" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="publishing_debt_tongtien" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="book_detail" Relationship="DB_phathanhsachModel.FK_publishing_debt_book_detail" FromRole="publishing_debt" ToRole="book_detail" />
+    <NavigationProperty Name="publishing" Relationship="DB_phathanhsachModel.FK_publishing_debt_publishing" FromRole="publishing_debt" ToRole="publishing" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tonkho">
+    <Key>
+      <PropertyRef Name="tonkho_id" />
+    </Key>
+    <Property Name="tonkho_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fk_book_detail" Type="Int32" />
+    <Property Name="tonkho_soluong" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="tonkho_ngaycapnhat" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="book_detail" Relationship="DB_phathanhsachModel.FK_tonkho_book_detail" FromRole="tonkho" ToRole="book_detail" />
+  </EntityType>
+  <Association Name="FK_book_detail_dausach">
+    <End Type="DB_phathanhsachModel.dausach" Role="dausach" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.book_detail" Role="book_detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dausach">
+        <PropertyRef Name="dausach_id" />
+      </Principal>
+      <Dependent Role="book_detail">
+        <PropertyRef Name="fk_dausach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_book_detail_publishing">
+    <End Type="DB_phathanhsachModel.publishing" Role="publishing" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.book_detail" Role="book_detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="book_detail">
+        <PropertyRef Name="fk_publishing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ctnhapsach_book_detail">
+    <End Type="DB_phathanhsachModel.book_detail" Role="book_detail" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.ctnhapsach" Role="ctnhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="ctnhapsach">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_publishing_debt_book_detail">
+    <End Type="DB_phathanhsachModel.book_detail" Role="book_detail" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.publishing_debt" Role="publishing_debt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="publishing_debt">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tonkho_book_detail">
+    <End Type="DB_phathanhsachModel.book_detail" Role="book_detail" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.tonkho" Role="tonkho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="tonkho">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ctnhapsach_nhapsach1">
+    <End Type="DB_phathanhsachModel.nhapsach" Role="nhapsach" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.ctnhapsach" Role="ctnhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhapsach">
+        <PropertyRef Name="nhapsach_id" />
+      </Principal>
+      <Dependent Role="ctnhapsach">
+        <PropertyRef Name="fk_nhapsach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_nhapsach_publishing">
+    <End Type="DB_phathanhsachModel.publishing" Role="publishing" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.nhapsach" Role="nhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="nhapsach">
+        <PropertyRef Name="fk_publishing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_publishing_debt_publishing">
+    <End Type="DB_phathanhsachModel.publishing" Role="publishing" Multiplicity="0..1" />
+    <End Type="DB_phathanhsachModel.publishing_debt" Role="publishing_debt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="publishing_debt">
+        <PropertyRef Name="fk_pubshing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

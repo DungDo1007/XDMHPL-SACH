@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_phathanhsachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="book_detail">
+    <Key>
+      <PropertyRef Name="book_detail_id" />
+    </Key>
+    <Property Name="book_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="book_detail_name" Type="nvarchar" MaxLength="100" />
+    <Property Name="fk_publishing" Type="int" />
+    <Property Name="book_detail_author" Type="nvarchar" MaxLength="100" />
+    <Property Name="book_detail_pages" Type="int" />
+    <Property Name="fk_dausach" Type="int" />
+  </EntityType>
+  <EntityType Name="ctnhapsach">
+    <Key>
+      <PropertyRef Name="ctnhapsach_id" />
+    </Key>
+    <Property Name="ctnhapsach_id" Type="int" Nullable="false" />
+    <Property Name="fk_nhapsach" Type="int" />
+    <Property Name="fk_book_detail" Type="int" />
+    <Property Name="nhapsach_soluong" Type="int" />
+    <Property Name="nhapsach_gianhap" Type="float" />
+  </EntityType>
+  <EntityType Name="dausach">
+    <Key>
+      <PropertyRef Name="dausach_id" />
+    </Key>
+    <Property Name="dausach_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dausach_name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="nhapsach">
+    <Key>
+      <PropertyRef Name="nhapsach_id" />
+    </Key>
+    <Property Name="nhapsach_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_publishing" Type="int" />
+    <Property Name="nhapsach_nguoigiao" Type="nvarchar" MaxLength="50" />
+    <Property Name="nhapsach_ngaygiao" Type="datetime" />
+  </EntityType>
+  <EntityType Name="publishing">
+    <Key>
+      <PropertyRef Name="publishing_id" />
+    </Key>
+    <Property Name="publishing_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="publishing_name" Type="nvarchar" MaxLength="100" />
+    <Property Name="publishing_address" Type="nvarchar" MaxLength="100" />
+    <Property Name="publishing_phone" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="publishing_debt">
+    <Key>
+      <PropertyRef Name="publishing_debt_id" />
+    </Key>
+    <Property Name="publishing_debt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_pubshing" Type="int" />
+    <Property Name="fk_book_detail" Type="int" />
+    <Property Name="publishing_debt_soluong" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="publishing_debt_tongtien" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tonkho">
+    <Key>
+      <PropertyRef Name="tonkho_id" />
+    </Key>
+    <Property Name="tonkho_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_book_detail" Type="int" />
+    <Property Name="tonkho_soluong" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="tonkho_ngaycapnhat" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_book_detail_dausach">
+    <End Role="dausach" Type="Self.dausach" Multiplicity="0..1" />
+    <End Role="book_detail" Type="Self.book_detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dausach">
+        <PropertyRef Name="dausach_id" />
+      </Principal>
+      <Dependent Role="book_detail">
+        <PropertyRef Name="fk_dausach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_book_detail_publishing">
+    <End Role="publishing" Type="Self.publishing" Multiplicity="0..1" />
+    <End Role="book_detail" Type="Self.book_detail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="book_detail">
+        <PropertyRef Name="fk_publishing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ctnhapsach_book_detail">
+    <End Role="book_detail" Type="Self.book_detail" Multiplicity="0..1" />
+    <End Role="ctnhapsach" Type="Self.ctnhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="ctnhapsach">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ctnhapsach_nhapsach1">
+    <End Role="nhapsach" Type="Self.nhapsach" Multiplicity="0..1" />
+    <End Role="ctnhapsach" Type="Self.ctnhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nhapsach">
+        <PropertyRef Name="nhapsach_id" />
+      </Principal>
+      <Dependent Role="ctnhapsach">
+        <PropertyRef Name="fk_nhapsach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_nhapsach_publishing">
+    <End Role="publishing" Type="Self.publishing" Multiplicity="0..1" />
+    <End Role="nhapsach" Type="Self.nhapsach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="nhapsach">
+        <PropertyRef Name="fk_publishing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_publishing_debt_book_detail">
+    <End Role="book_detail" Type="Self.book_detail" Multiplicity="0..1" />
+    <End Role="publishing_debt" Type="Self.publishing_debt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="publishing_debt">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_publishing_debt_publishing">
+    <End Role="publishing" Type="Self.publishing" Multiplicity="0..1" />
+    <End Role="publishing_debt" Type="Self.publishing_debt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="publishing">
+        <PropertyRef Name="publishing_id" />
+      </Principal>
+      <Dependent Role="publishing_debt">
+        <PropertyRef Name="fk_pubshing" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tonkho_book_detail">
+    <End Role="book_detail" Type="Self.book_detail" Multiplicity="0..1" />
+    <End Role="tonkho" Type="Self.tonkho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="book_detail">
+        <PropertyRef Name="book_detail_id" />
+      </Principal>
+      <Dependent Role="tonkho">
+        <PropertyRef Name="fk_book_detail" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_phathanhsachModelStoreContainer">
+    <EntitySet Name="book_detail" EntityType="Self.book_detail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ctnhapsach" EntityType="Self.ctnhapsach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="dausach" EntityType="Self.dausach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="nhapsach" EntityType="Self.nhapsach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="publishing" EntityType="Self.publishing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="publishing_debt" EntityType="Self.publishing_debt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tonkho" EntityType="Self.tonkho" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_book_detail_dausach" Association="Self.FK_book_detail_dausach">
+      <End Role="dausach" EntitySet="dausach" />
+      <End Role="book_detail" EntitySet="book_detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_book_detail_publishing" Association="Self.FK_book_detail_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="book_detail" EntitySet="book_detail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ctnhapsach_book_detail" Association="Self.FK_ctnhapsach_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="ctnhapsach" EntitySet="ctnhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ctnhapsach_nhapsach1" Association="Self.FK_ctnhapsach_nhapsach1">
+      <End Role="nhapsach" EntitySet="nhapsach" />
+      <End Role="ctnhapsach" EntitySet="ctnhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_nhapsach_publishing" Association="Self.FK_nhapsach_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="nhapsach" EntitySet="nhapsach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_publishing_debt_book_detail" Association="Self.FK_publishing_debt_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="publishing_debt" EntitySet="publishing_debt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_publishing_debt_publishing" Association="Self.FK_publishing_debt_publishing">
+      <End Role="publishing" EntitySet="publishing" />
+      <End Role="publishing_debt" EntitySet="publishing_debt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tonkho_book_detail" Association="Self.FK_tonkho_book_detail">
+      <End Role="book_detail" EntitySet="book_detail" />
+      <End Role="tonkho" EntitySet="tonkho" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

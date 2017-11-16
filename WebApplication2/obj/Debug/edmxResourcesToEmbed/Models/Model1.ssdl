@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="THUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DaiLy">
+    <Key>
+      <PropertyRef Name="dailyID" />
+    </Key>
+    <Property Name="dailyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="daily_ten" Type="nvarchar" MaxLength="50" />
+    <Property Name="daily_diachi" Type="nvarchar" MaxLength="100" />
+    <Property Name="daily_sdt" Type="text" />
+    <Property Name="daily_user" Type="varchar" MaxLength="50" />
+    <Property Name="daily_pass" Type="varchar" MaxLength="50" />
+    <Property Name="daily_debtmax" Type="float" />
+  </EntityType>
+  <EntityType Name="DaiLyDebt">
+    <Key>
+      <PropertyRef Name="dailydebtID" />
+    </Key>
+    <Property Name="dailydebtID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_dailyID" Type="int" />
+    <Property Name="fk_sachID" Type="int" />
+    <Property Name="dailydebt_soluong" Type="int" />
+  </EntityType>
+  <EntityType Name="DaiLyDebtTien">
+    <Key>
+      <PropertyRef Name="dailydebttienID" />
+    </Key>
+    <Property Name="dailydebttienID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_dailyID" Type="int" />
+    <Property Name="dailydebttien_tien" Type="float" />
+    <Property Name="dailydebttien_ngaycapnhat" Type="datetime" />
+    <Property Name="dailydebttien_sach" Type="int" />
+  </EntityType>
+  <EntityType Name="DoanhThu">
+    <Key>
+      <PropertyRef Name="doanhthuID" />
+    </Key>
+    <Property Name="doanhthuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="doanhthu_tien" Type="float" />
+    <Property Name="doanhthu_ngaycapnhat" Type="datetime" />
+  </EntityType>
+  <EntityType Name="NhapSachDetails">
+    <Key>
+      <PropertyRef Name="ctnhapsachID" />
+    </Key>
+    <Property Name="ctnhapsachID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nhapsachID" Type="int" />
+    <Property Name="fk_sachID" Type="int" />
+    <Property Name="soluong" Type="int" />
+  </EntityType>
+  <EntityType Name="NhapSachMaster">
+    <Key>
+      <PropertyRef Name="nhapsachID" />
+    </Key>
+    <Property Name="nhapsachID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_nxbID" Type="int" />
+    <Property Name="nhapsach_ngaygiao" Type="datetime" />
+    <Property Name="nhapsach_nguoigiao" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NXB">
+    <Key>
+      <PropertyRef Name="nxbID" />
+    </Key>
+    <Property Name="nxbID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nxb_ten" Type="nvarchar" MaxLength="100" />
+    <Property Name="nxb_diachi" Type="nvarchar" MaxLength="100" />
+    <Property Name="nxb_sdt" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NXBDebt">
+    <Key>
+      <PropertyRef Name="nxbdebtID" />
+    </Key>
+    <Property Name="nxbdebtID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_nxbID" Type="int" />
+    <Property Name="fk_sachID" Type="int" />
+    <Property Name="nxbdebt_soluong" Type="int" />
+    <Property Name="nxbdebt_banduoc" Type="int" />
+  </EntityType>
+  <EntityType Name="NXBDebtTien">
+    <Key>
+      <PropertyRef Name="nxbdebttienID" />
+    </Key>
+    <Property Name="nxbdebttienID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nxbdebttien_tien" Type="float" />
+    <Property Name="nxbdebttien_ngaycapnhat" Type="datetime" />
+    <Property Name="fk_nxbID" Type="int" />
+  </EntityType>
+  <EntityType Name="Sach">
+    <Key>
+      <PropertyRef Name="sachID" />
+    </Key>
+    <Property Name="sachID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sach_ten" Type="nvarchar" MaxLength="50" />
+    <Property Name="sach_tacgia" Type="nvarchar" MaxLength="50" />
+    <Property Name="fk_nxbID" Type="int" />
+    <Property Name="sach_gianhap" Type="float" />
+    <Property Name="sach_giaxuat" Type="float" />
+    <Property Name="sach_soluong" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TonKho">
+    <Key>
+      <PropertyRef Name="tonkhoID" />
+    </Key>
+    <Property Name="tonkhoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_sachID" Type="int" />
+    <Property Name="tonkho_soluong" Type="int" />
+    <Property Name="tonkho_ngaycapnhat" Type="datetime" />
+  </EntityType>
+  <EntityType Name="XuatSachDetails">
+    <Key>
+      <PropertyRef Name="ctxuatsachID" />
+    </Key>
+    <Property Name="ctxuatsachID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="xuatsachID" Type="int" />
+    <Property Name="fk_sachID" Type="int" />
+    <Property Name="soluong" Type="int" />
+  </EntityType>
+  <EntityType Name="XuatSachMaster">
+    <Key>
+      <PropertyRef Name="xuatsachID" />
+    </Key>
+    <Property Name="xuatsachID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fk_dailyID" Type="int" />
+    <Property Name="xuatsach_ngayorder" Type="datetime" />
+    <Property Name="xuatsach_ngayupdate" Type="datetime" />
+    <Property Name="xuatsach_nguoinhan" Type="nvarchar" MaxLength="50" />
+    <Property Name="xuatsach_trangthai" Type="nvarchar" MaxLength="50" />
+    <Property Name="xuatsach_tongtien" Type="float" />
+  </EntityType>
+  <Association Name="FK_DaiLyDebt_DaiLy">
+    <End Role="DaiLy" Type="Self.DaiLy" Multiplicity="0..1" />
+    <End Role="DaiLyDebt" Type="Self.DaiLyDebt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaiLy">
+        <PropertyRef Name="dailyID" />
+      </Principal>
+      <Dependent Role="DaiLyDebt">
+        <PropertyRef Name="fk_dailyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DaiLyDebt_Sach">
+    <End Role="Sach" Type="Self.Sach" Multiplicity="0..1" />
+    <End Role="DaiLyDebt" Type="Self.DaiLyDebt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sach">
+        <PropertyRef Name="sachID" />
+      </Principal>
+      <Dependent Role="DaiLyDebt">
+        <PropertyRef Name="fk_sachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DaiLyDebtTien_DaiLy">
+    <End Role="DaiLy" Type="Self.DaiLy" Multiplicity="0..1" />
+    <End Role="DaiLyDebtTien" Type="Self.DaiLyDebtTien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaiLy">
+        <PropertyRef Name="dailyID" />
+      </Principal>
+      <Dependent Role="DaiLyDebtTien">
+        <PropertyRef Name="fk_dailyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DaiLyDebtTien_DaiLy1">
+    <End Role="DaiLy" Type="Self.DaiLy" Multiplicity="0..1" />
+    <End Role="DaiLyDebtTien" Type="Self.DaiLyDebtTien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaiLy">
+        <PropertyRef Name="dailyID" />
+      </Principal>
+      <Dependent Role="DaiLyDebtTien">
+        <PropertyRef Name="fk_dailyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhapSachDetails_Sach">
+    <End Role="Sach" Type="Self.Sach" Multiplicity="0..1" />
+    <End Role="NhapSachDetails" Type="Self.NhapSachDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sach">
+        <PropertyRef Name="sachID" />
+      </Principal>
+      <Dependent Role="NhapSachDetails">
+        <PropertyRef Name="fk_sachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NhapSachMaster_NXB">
+    <End Role="NXB" Type="Self.NXB" Multiplicity="0..1" />
+    <End Role="NhapSachMaster" Type="Self.NhapSachMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NXB">
+        <PropertyRef Name="nxbID" />
+      </Principal>
+      <Dependent Role="NhapSachMaster">
+        <PropertyRef Name="fk_nxbID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NXBDebt_NXB">
+    <End Role="NXB" Type="Self.NXB" Multiplicity="0..1" />
+    <End Role="NXBDebt" Type="Self.NXBDebt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NXB">
+        <PropertyRef Name="nxbID" />
+      </Principal>
+      <Dependent Role="NXBDebt">
+        <PropertyRef Name="fk_nxbID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NXBDebt_Sach">
+    <End Role="Sach" Type="Self.Sach" Multiplicity="0..1" />
+    <End Role="NXBDebt" Type="Self.NXBDebt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sach">
+        <PropertyRef Name="sachID" />
+      </Principal>
+      <Dependent Role="NXBDebt">
+        <PropertyRef Name="fk_sachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NXBDebtTien_NXB">
+    <End Role="NXB" Type="Self.NXB" Multiplicity="0..1" />
+    <End Role="NXBDebtTien" Type="Self.NXBDebtTien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NXB">
+        <PropertyRef Name="nxbID" />
+      </Principal>
+      <Dependent Role="NXBDebtTien">
+        <PropertyRef Name="fk_nxbID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_OrderMaster">
+    <End Role="NhapSachMaster" Type="Self.NhapSachMaster" Multiplicity="0..1" />
+    <End Role="NhapSachDetails" Type="Self.NhapSachDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhapSachMaster">
+        <PropertyRef Name="nhapsachID" />
+      </Principal>
+      <Dependent Role="NhapSachDetails">
+        <PropertyRef Name="nhapsachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sach_NXB">
+    <End Role="NXB" Type="Self.NXB" Multiplicity="0..1" />
+    <End Role="Sach" Type="Self.Sach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NXB">
+        <PropertyRef Name="nxbID" />
+      </Principal>
+      <Dependent Role="Sach">
+        <PropertyRef Name="fk_nxbID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tonkho_Sach">
+    <End Role="Sach" Type="Self.Sach" Multiplicity="0..1" />
+    <End Role="TonKho" Type="Self.TonKho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sach">
+        <PropertyRef Name="sachID" />
+      </Principal>
+      <Dependent Role="TonKho">
+        <PropertyRef Name="fk_sachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XuatSachDetails_Sach">
+    <End Role="Sach" Type="Self.Sach" Multiplicity="0..1" />
+    <End Role="XuatSachDetails" Type="Self.XuatSachDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sach">
+        <PropertyRef Name="sachID" />
+      </Principal>
+      <Dependent Role="XuatSachDetails">
+        <PropertyRef Name="fk_sachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XuatSachDetails_XuatSachMaster">
+    <End Role="XuatSachMaster" Type="Self.XuatSachMaster" Multiplicity="0..1" />
+    <End Role="XuatSachDetails" Type="Self.XuatSachDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="XuatSachMaster">
+        <PropertyRef Name="xuatsachID" />
+      </Principal>
+      <Dependent Role="XuatSachDetails">
+        <PropertyRef Name="xuatsachID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XuatSachMaster_DaiLy">
+    <End Role="DaiLy" Type="Self.DaiLy" Multiplicity="0..1" />
+    <End Role="XuatSachMaster" Type="Self.XuatSachMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaiLy">
+        <PropertyRef Name="dailyID" />
+      </Principal>
+      <Dependent Role="XuatSachMaster">
+        <PropertyRef Name="fk_dailyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="THUModelStoreContainer">
+    <EntitySet Name="DaiLy" EntityType="Self.DaiLy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DaiLyDebt" EntityType="Self.DaiLyDebt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DaiLyDebtTien" EntityType="Self.DaiLyDebtTien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoanhThu" EntityType="Self.DoanhThu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhapSachDetails" EntityType="Self.NhapSachDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhapSachMaster" EntityType="Self.NhapSachMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NXB" EntityType="Self.NXB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NXBDebt" EntityType="Self.NXBDebt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NXBDebtTien" EntityType="Self.NXBDebtTien" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sach" EntityType="Self.Sach" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TonKho" EntityType="Self.TonKho" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="XuatSachDetails" EntityType="Self.XuatSachDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="XuatSachMaster" EntityType="Self.XuatSachMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DaiLyDebt_DaiLy" Association="Self.FK_DaiLyDebt_DaiLy">
+      <End Role="DaiLy" EntitySet="DaiLy" />
+      <End Role="DaiLyDebt" EntitySet="DaiLyDebt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DaiLyDebt_Sach" Association="Self.FK_DaiLyDebt_Sach">
+      <End Role="Sach" EntitySet="Sach" />
+      <End Role="DaiLyDebt" EntitySet="DaiLyDebt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DaiLyDebtTien_DaiLy" Association="Self.FK_DaiLyDebtTien_DaiLy">
+      <End Role="DaiLy" EntitySet="DaiLy" />
+      <End Role="DaiLyDebtTien" EntitySet="DaiLyDebtTien" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DaiLyDebtTien_DaiLy1" Association="Self.FK_DaiLyDebtTien_DaiLy1">
+      <End Role="DaiLy" EntitySet="DaiLy" />
+      <End Role="DaiLyDebtTien" EntitySet="DaiLyDebtTien" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhapSachDetails_Sach" Association="Self.FK_NhapSachDetails_Sach">
+      <End Role="Sach" EntitySet="Sach" />
+      <End Role="NhapSachDetails" EntitySet="NhapSachDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NhapSachMaster_NXB" Association="Self.FK_NhapSachMaster_NXB">
+      <End Role="NXB" EntitySet="NXB" />
+      <End Role="NhapSachMaster" EntitySet="NhapSachMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NXBDebt_NXB" Association="Self.FK_NXBDebt_NXB">
+      <End Role="NXB" EntitySet="NXB" />
+      <End Role="NXBDebt" EntitySet="NXBDebt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NXBDebt_Sach" Association="Self.FK_NXBDebt_Sach">
+      <End Role="Sach" EntitySet="Sach" />
+      <End Role="NXBDebt" EntitySet="NXBDebt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NXBDebtTien_NXB" Association="Self.FK_NXBDebtTien_NXB">
+      <End Role="NXB" EntitySet="NXB" />
+      <End Role="NXBDebtTien" EntitySet="NXBDebtTien" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_OrderMaster" Association="Self.FK_OrderDetails_OrderMaster">
+      <End Role="NhapSachMaster" EntitySet="NhapSachMaster" />
+      <End Role="NhapSachDetails" EntitySet="NhapSachDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sach_NXB" Association="Self.FK_Sach_NXB">
+      <End Role="NXB" EntitySet="NXB" />
+      <End Role="Sach" EntitySet="Sach" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tonkho_Sach" Association="Self.FK_tonkho_Sach">
+      <End Role="Sach" EntitySet="Sach" />
+      <End Role="TonKho" EntitySet="TonKho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XuatSachDetails_Sach" Association="Self.FK_XuatSachDetails_Sach">
+      <End Role="Sach" EntitySet="Sach" />
+      <End Role="XuatSachDetails" EntitySet="XuatSachDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XuatSachDetails_XuatSachMaster" Association="Self.FK_XuatSachDetails_XuatSachMaster">
+      <End Role="XuatSachMaster" EntitySet="XuatSachMaster" />
+      <End Role="XuatSachDetails" EntitySet="XuatSachDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XuatSachMaster_DaiLy" Association="Self.FK_XuatSachMaster_DaiLy">
+      <End Role="DaiLy" EntitySet="DaiLy" />
+      <End Role="XuatSachMaster" EntitySet="XuatSachMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
